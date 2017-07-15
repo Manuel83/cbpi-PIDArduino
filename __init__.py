@@ -26,10 +26,17 @@ class PIDArduino(KettleController):
             heat_percent = pid.calc(self.get_temp(), self.get_target_temp())
             heating_time = sampleTime * heat_percent / 100
             wait_time = sampleTime - heating_time
-            self.heater_on(100)
-            self.sleep(heating_time)
-            self.heater_off()
-            self.sleep(wait_time)
+            if heating_time == sampleTime:
+                self.heater_on(100)
+                self.sleep(heating_time)
+            elif wait_time == sampleTime:
+                self.heater_off()
+                self.sleep(wait_time)
+            else:
+                self.heater_on(100)
+                self.sleep(heating_time)
+                self.heater_off()
+                self.sleep(wait_time)
 
 # Based on Arduino PID Library
 # See https://github.com/br3ttb/Arduino-PID-Library
