@@ -128,12 +128,12 @@ class PIDPWMAutoTune(KettleController):
 	def stop(self):
 		if self.is_running():
 			self.notify("AutoTune Interrupted", "AutoTune has been interrupted and was not able to finish", type="danger", timeout=None)
-		
+
 		super(KettleController, self).stop()
 
 	def run(self):
 		self.notify("AutoTune In Progress", "Do not turn off Auto mode until AutoTuning is complete", type="success", timeout=None)
-	
+
 		sampleTime = 5
 		wait_time = 5
 		outstep = float(self.a_outstep)
@@ -145,8 +145,9 @@ class PIDPWMAutoTune(KettleController):
 		except Exception as e:
 			self.notify("AutoTune Error", str(e), type="danger", timeout=None)
 			atune.log(str(e))
-			self.autoOff() 
+			self.autoOff()
 		atune.log("AutoTune will now begin")
+        self.heater_on(0)
 
 		while self.is_running() and not atune.run(self.get_temp()):
 			heat_percent = atune.output
@@ -260,7 +261,7 @@ class AutoTuner(object):
 
 		with open(filename, "a") as file:
 			file.write("%s,%s\n" % (formatted_time, text))
-		
+
 	def run(self, inputValue):
 		now = self._getTimeMs()
 
