@@ -147,8 +147,7 @@ class PIDPWMAutoTune(KettleController):
 			atune.log(str(e))
 			self.autoOff()
 		atune.log("AutoTune will now begin")
-        self.heater_on(0)
-
+		self.heater_on(0)
 		while self.is_running() and not atune.run(self.get_temp()):
 			heat_percent = atune.output
 			print(heat_percent)
