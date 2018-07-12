@@ -1,3 +1,3 @@
-# Kettle Logic PID Arduino
+# Kettle Logic PID PWM based on PID Arduino
 
-This is ported form the verson 2.2 and now available as a plugin
+Control your temperature using a combination of PWM and PID logic.
